@@ -19,6 +19,7 @@ console.log("end");
     IIFE
     end
     Timeout
+    
     console.log("Timeout")必須要等setTimeout function跑完才會出現
     而function帶入時間為1000ms 所以會延遲後才出現"Timeout"
 
@@ -41,6 +42,7 @@ console.log("end");
     IIFE
     end
     Timeout
+
     setTimeout function 帶入的時間為0ms 所以四個log同時出現
 
 ## (3) 請問下列程式執行後的結果為何？為什麼？
@@ -62,6 +64,7 @@ foo();
     foo
     bar
     baz
+
     function呼叫後才會動作  所以先出現"foo"之後呼叫bar();baz();
     後出現"bar"和"baz"
 
