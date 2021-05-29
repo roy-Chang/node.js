@@ -33,7 +33,7 @@
         //HTTP method: Get, POST,...
         //URL
         //async: true / false
-        xhr.open("GET", "http://34.217.120.25:3000");
+        xhr.open("GET", "http://34.217.120.25:3000",true);
         xhr.onload = function () {
             if (this.status === 200) {
                 message.innerText = `非同步請求 load ${this.responseText}`;
@@ -52,8 +52,8 @@
         //HTTP method: Get, POST,...
         //URL
         //async: true / false
-        xhr.open("GET", "http://34.217.120.25:3000");
-        xhr.onload = function () {
+        xhr.open("GET", "http://34.217.120.25:3000",false);
+        xhr.onload = function(){
             message.innerText = `同步請求 load ${this.responseText}`;
         };
         xhr.send();
