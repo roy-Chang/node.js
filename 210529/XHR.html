@@ -34,10 +34,15 @@
         //URL
         //async: true / false
         xhr.open("GET", "http://34.217.120.25:3000");
-        xhr.onload = function (response) {
-            console.log(response);
-            message.innerText = `非同步請求 load`;
+        xhr.onload = function () {
+            if (this.status === 200) {
+                message.innerText = `非同步請求 load ${this.responseText}`;
+            } else {
+                message.innerText = `非同步請求 有問題 ${this.status}`;
+            }
         };
+        // xhr.onerror
+        // xhr.onprogress
         xhr.send();
     })
 
@@ -48,9 +53,8 @@
         //URL
         //async: true / false
         xhr.open("GET", "http://34.217.120.25:3000");
-        xhr.onload = function (response) {
-            console.log(response);
-            message.innerText = `同步請求 load`;
+        xhr.onload = function () {
+            message.innerText = `同步請求 load ${this.responseText}`;
         };
         xhr.send();
     })
