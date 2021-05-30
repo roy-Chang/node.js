@@ -1,13 +1,13 @@
 //今天日期
 var date = new Date();
-var nowYear = date.getFullYear().toString();
+var nowYear = date.getUTCFullYear().toString();
 var nowMonth = "";
-if ((date.getMonth() + 1) <= 10) {
-    nowMonth = "0" + (date.getMonth() + 1).toString();
+if ((date.getUTCMonth() + 1) <= 10) {
+    nowMonth = "0" + (date.getUTCMonth() + 1).toString();
 } else {
-    nowMonth = (date.getMonth() + 1).toString();
+    nowMonth = (date.getUTCMonth() + 1).toString();
 }
-var nowDate = date.getDate().toString();
+var nowDate = date.getUTCDate().toString();
 var today = nowYear + nowMonth + nowDate;
 
 
