@@ -7,7 +7,7 @@ if ((date.getMonth() + 1) <= 10) {
 } else {
     nowMonth = (date.getMonth() + 1).toString();
 }
-var nowDate = (date.getDate() + 1).toString();
+var nowDate = date.getDate().toString();
 var today = nowYear + nowMonth + nowDate;
 
 
