@@ -35,8 +35,6 @@ function stockPromise() {
                 .then(function (response) {
                     if (response.data.stat === "OK") {
                         resolve(response.data);
-                        // console.log(response.data.date);
-                        // console.log(response.data.title);
                     }
                 })
         })
