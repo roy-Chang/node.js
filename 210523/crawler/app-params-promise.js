@@ -1,3 +1,18 @@
+//今天日期
+var date = new Date();
+var nowYear = date.getFullYear().toString();
+var nowMonth = "";
+if ((date.getMonth() + 1) <= 10) {
+    nowMonth = "0" + (date.getMonth() + 1).toString();
+} else {
+    nowMonth = (date.getMonth() + 1).toString();
+}
+var nowDate = (date.getDate() + 1).toString();
+var today = nowYear + nowMonth + nowDate;
+
+
+
+
 const axios = require('axios');
 //從 stock.txt 讀股票代碼進來
 const fs = require("fs");
@@ -13,7 +28,7 @@ function stockPromise() {
                 .get('https://www.twse.com.tw/exchangeReport/STOCK_DAY', {
                     params: {
                         reponse: "josn",
-                        date: "20210523",
+                        date: today,
                         stockNo: data,
                     },
                 })
