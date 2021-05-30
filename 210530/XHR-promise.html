@@ -33,11 +33,11 @@
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "http://34.217.120.25:3000", true);
             xhr.onload = function () {
-                if (xhr.status === 200) {
-                    resolve(`非同步請求 load ${xhr.responseText}`);
+                if (this.status === 200) {
+                    resolve(this.responseText);
                 } else {
-                    reject(`非同步請求 有問題 ${xhr.status}`);
-                }
+                    reject(this.status);
+                }//職責切分
             };
             xhr.send();
         });
@@ -47,21 +47,12 @@
     asyncBtn.addEventListener("click", function () {
         xhrPromise()
             .then((result) => {
-                message.innerText = result;
+                message.innerText = `非同步請求 load ${result}`;
             })
             .catch((error) => {
-                message.innerText = error;
+                message.innerText = `非同步請求 error ${error}`;
             });
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("GET", "http://34.217.120.25:3000", true);
-        // xhr.onload = function () {
-        //   if (this.status === 200) {
-        //     message.innerText = `非同步請求 load ${this.responseText}`;
-        //   } else {
-        //     message.innerText = `非同步請求 有問題 ${this.status}`;
-        //   }
-        // };
-        // xhr.send();
+
     });
 
 
