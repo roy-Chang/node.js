@@ -47,10 +47,10 @@
     asyncBtn.addEventListener("click", function () {
         xhrPromise()
             .then((result) => {
-                console.log(result);
+                message.innerText = result;
             })
             .catch((error) => {
-                console.log(error);
+                message.innerText = error;
             });
         // var xhr = new XMLHttpRequest();
         // xhr.open("GET", "http://34.217.120.25:3000", true);
