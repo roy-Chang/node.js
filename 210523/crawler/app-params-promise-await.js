@@ -17,6 +17,8 @@ const axios = require('axios');
 const { error } = require('console');
 //從 stock.txt 讀股票代碼進來
 const fs = require("fs");
+const moment = require('moment');
+
 
 function stockPromise() {
     return new Promise((resolve, reject) => {
@@ -36,15 +38,13 @@ async function stockCrawler() {
         let axiosResult = await axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
             params: {
                 response: "json",
-                date: today,
+                date: moment().format("YYYYMMDD"),
                 stockNo: stockCode,
             },
         });
-
         if (axiosResult.data.stat === "OK") {
             console.log(axiosResult.data);
         }
-
     } catch (err) {
         console.log("Data Error", err);
     } finally {
