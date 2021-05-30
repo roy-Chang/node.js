@@ -4,23 +4,27 @@ const fs = require("fs");
 
 function stockPromise() {
     return new Promise((resolve, reject) => {
-        var data = fs.readFileSync('stock.txt', 'utf8');
-        // console.log(data);
-        axios
-            .get('https://www.twse.com.tw/exchangeReport/STOCK_DAY', {
-                params: {
-                    reponse: "josn",
-                    date: "20210523",
-                    stockNo: data,
-                },
-            })
-            .then(function (response) {
-                if (response.data.stat === "OK") {
-                    resolve(response.data);
-                    // console.log(response.data.date);
-                    // console.log(response.data.title);
-                }
-            })
+        // var data = fs.readFileSync('stock.txt', 'utf8');
+        fs.readFile("stock.txt", "utf8", (err, data) => {
+            if (err) {
+                return console.error(err);
+            }
+            axios
+                .get('https://www.twse.com.tw/exchangeReport/STOCK_DAY', {
+                    params: {
+                        reponse: "josn",
+                        date: "20210523",
+                        stockNo: data,
+                    },
+                })
+                .then(function (response) {
+                    if (response.data.stat === "OK") {
+                        resolve(response.data);
+                        // console.log(response.data.date);
+                        // console.log(response.data.title);
+                    }
+                })
+        })
     });
 }
 stockPromise()
