@@ -19,6 +19,14 @@ const { error } = require('console');
 const fs = require("fs/promises");
 const moment = require('moment');
 
+const mysql = require("mysql")
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '123456',
+    database: 'stock'
+});
 // function stockPromise() {
 //     return new Promise((resolve, reject) => {
 //         // var data = fs.readFileSync('stock.txt', 'utf8');
@@ -31,9 +39,12 @@ const moment = require('moment');
 //     });
 // }
 
+
 fs.readFile("stock.txt", "utf8")
     .then((stockCode) => {
         console.log(stockCode);
+        axios.get()
+
         return axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
             params: {
                 response: "json",
@@ -44,7 +55,9 @@ fs.readFile("stock.txt", "utf8")
     })
     .then((response) => {
         if (response.data.stat === "OK") {
-            console.log(response.data);
+            console.log(response.data.date);
+            console.log(response.data.title);
+
         }
     })
     .catch((error) => {
