@@ -35,7 +35,7 @@ connection = Promise.promisifyAll(connection);
                 console.log("無此股票，請確認股票代碼是否正確");
             }
         } else {
-            console.log("資料存在, ", dbSearch);
+            console.log("資料存在, ", dbSearch[0]);
         }
     } catch (err) {
         console.error(err);
