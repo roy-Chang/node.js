@@ -1,3 +1,5 @@
+const connection = require("./utils/db");
+
 const express = require("express");
 let app = express();
 
@@ -36,8 +38,21 @@ app.get("/about", function (req, res) {
     res.render("about");
 })
 app.get("/test", function (req, res) {
+
     res.send("Test Express")
 })
-app.listen(3000, () => {
+
+app.get("/stock", async (req, res) => {
+    let queryResults = await connection.queryAsync("SELECT * FROM stock;");
+    res.render("stock/list")
+    stocks = queryResults;
+
+})
+
+
+
+app.listen(3000, async () => {
+
+    await connection.connectAsync();
     console.log("run in port 3000");
 })
