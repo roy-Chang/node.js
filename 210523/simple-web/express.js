@@ -1,3 +1,4 @@
+// 資料庫連線
 const connection = require("./utils/db");
 
 const express = require("express");
