@@ -27,6 +27,13 @@ app.use(function (req, res, next) {
     next();
 })
 
+// stock 模組
+let stockRouter = require("./routers/stock");
+app.use("/stock", stockRouter);
+
+
+
+
 
 
 // 路由 router
@@ -43,21 +50,21 @@ app.get("/test", function (req, res) {
     res.send("Test Express")
 })
 
-app.get("/stock", async (req, res) => {
-    let queryResults = await connection.queryAsync("SELECT * FROM stock;");
-    res.render("stock/list", {
-        stocks: queryResults,
-    });
-})
+// app.get("/stock", async (req, res) => {
+//     let queryResults = await connection.queryAsync("SELECT * FROM stock;");
+//     res.render("stock/list", {
+//         stocks: queryResults,
+//     });
+// })
 
-app.get("/stock/:stockCode", async (req, res) => {
-    let queryResultsStocks = await connection.queryAsync("SELECT * FROM stock WHERE stock_id = ?;", req.params.stockCode);
-    let queryResultsPrices = await connection.queryAsync("SELECT*FROM stock_price WHERE stock_id = ? ORDER BY date;", req.params.stockCode)
-    res.render("stock/detail", {
-        stocks: queryResultsStocks,
-        stockPrices: queryResultsPrices
-    });
-})
+// app.get("/stock/:stockCode", async (req, res) => {
+//     let queryResultsStocks = await connection.queryAsync("SELECT * FROM stock WHERE stock_id = ?;", req.params.stockCode);
+//     let queryResultsPrices = await connection.queryAsync("SELECT*FROM stock_price WHERE stock_id = ? ORDER BY date;", req.params.stockCode)
+//     res.render("stock/detail", {
+//         stocks: queryResultsStocks,
+//         stockPrices: queryResultsPrices
+//     });
+// })
 
 
 app.listen(3000, async () => {
