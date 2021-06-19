@@ -1,7 +1,8 @@
 extends ../_layouts/master
 
 block content 
-    h1 這是股票資料
+    each stock in stocks
+        h1 這是#{stock.stock_name}股票資料
 
     table
         tr 

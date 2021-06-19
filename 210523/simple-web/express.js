@@ -51,9 +51,11 @@ app.get("/stock", async (req, res) => {
 })
 
 app.get("/stock/:stockCode", async (req, res) => {
-    let queryResults = await connection.queryAsync("SELECT*FROM stock_price WHERE stock_id = ? ORDER BY date;", req.params.stockCode)
+    let queryResultsStocks = await connection.queryAsync("SELECT * FROM stock WHERE stock_id = ?;", req.params.stockCode);
+    let queryResultsPrices = await connection.queryAsync("SELECT*FROM stock_price WHERE stock_id = ? ORDER BY date;", req.params.stockCode)
     res.render("stock/detail", {
-        stockPrices: queryResults
+        stocks: queryResultsStocks,
+        stockPrices: queryResultsPrices
     });
 })
 
