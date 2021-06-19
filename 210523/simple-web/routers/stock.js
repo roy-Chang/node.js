@@ -21,7 +21,7 @@ router.get("/:stockCode", async (req, res) => {
 
     const total = count[0].total; //總共幾筆
     const perPage = 10; // 一頁10筆
-    const lastPage = Math.ceil(total / perPage) + 1; // 總共幾頁
+    const lastPage = Math.ceil(total / perPage); // 總共幾頁
 
     const currentPage = req.query.page || 1; // 新增page頁 預設第一頁
     const offset = (currentPage - 1) * perPage;
@@ -38,6 +38,7 @@ router.get("/:stockCode", async (req, res) => {
         , [req.params.stockCode, perPage, offset]
     );
 
+    console.log(queryResultsPrices);
     res.render("stock/detail", {
         stocks: queryResultsStocks,
         stockPrices: queryResultsPrices,
