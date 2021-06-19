@@ -20,7 +20,6 @@ router.get("/:stockCode", async (req, res) => {
     let count = await connection.queryAsync("SELECT COUNT(*) as total FROM stock_price WHERE stock_id = ?;", req.params.stockCode);
 
     const total = count[0].total; //總共幾筆
-    console.log(total);
     const perPage = 10; // 一頁10筆
     const lastPage = Math.ceil(total / perPage) + 1; // 總共幾頁
 

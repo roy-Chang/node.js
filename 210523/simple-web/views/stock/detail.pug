@@ -18,7 +18,8 @@ block content
                 td #{price.low_price}
                 td #{price.close_price} 
 
-        .pagination
-            - for(var p = 1 ; p < pagination.lastPage ; p++)
-                a(href=`/stock/${stocks.stock_id}?page=${p}`, class=p==pagination.currentPage?"active":"") #{p}
-    a(href='/stock') #{"返回列表"}
+    .pagination
+        - for(var p = 1 ; p < pagination.lastPage ; p++)
+            a(href=`/stock/${stocks.stock_id}?page=${p}`, class=p==pagination.currentPage?"active":"") #{p}
+    .back
+        a(href='/stock') #{"返回列表"}
