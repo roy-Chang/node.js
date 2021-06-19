@@ -1,8 +1,7 @@
 extends ../_layouts/master
 
 block content 
-    each stock in stocks
-        h1 #{stock.stock_name} 股票資料
+    h1 #{stocks.stock_name} 股票資料
 
     table
         tr 
@@ -18,3 +17,8 @@ block content
                 td #{price.high_price} 
                 td #{price.low_price}
                 td #{price.close_price} 
+
+        .pagination
+            - for(var p = 1 ; p < pagination.lastPage ; p++)
+                a(href=`/stock/${stocks.stock_id}?page=${p}`, class=p==pagination.currentPage?"active":"") #{p}
+    a(href='/stock') #{"返回列表"}
