@@ -45,9 +45,11 @@ app.get("/test", function (req, res) {
 
 app.get("/stock", async (req, res) => {
     let queryResults = await connection.queryAsync("SELECT * FROM stock;");
-    res.render("stock/list")
-    stocks = queryResults;
-
+    // res.render("stock/list")
+    // stocks = queryResults;
+    res.render("stock/list", {
+        stocks: queryResults,
+    });
 })
 
 
