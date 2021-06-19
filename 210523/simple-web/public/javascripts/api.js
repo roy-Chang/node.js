@@ -12,19 +12,19 @@
 // })
 
 
-$.ajax({
-    method: "GET",
-    url: '/api/stock',
-    dataType: "json",
-})
-    .done(function (data) {
-        console.log(data);
-    }).fail(function (error) {
-        console.log(error);
-    })
-    .always(function () {
-        console.log("complete");
-    });
+// $.ajax({
+//     method: "GET",
+//     url: '/api/stock',
+//     dataType: "json",
+// })
+//     .done(function (data) {
+//         console.log(data);
+//     }).fail(function (error) {
+//         console.log(error);
+//     })
+//     .always(function () {
+//         console.log("complete");
+//     });
 
 
 // axios
@@ -32,7 +32,7 @@ $.ajax({
 axios.get('/api/stock')
     .then(function (response) {
         // handle success
-        console.log(response);
+        console.log(response.data);
     })
     .catch(function (error) {
         // handle error
