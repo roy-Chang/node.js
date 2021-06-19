@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     });
 })
 
-router.get("/:stockCode", async (req, res) => {
+router.get("/:stockCode", async (req, res, next) => {
 
     let queryResultsStocks = await connection.queryAsync("SELECT * FROM stock WHERE stock_id = ?;", req.params.stockCode);
 
@@ -28,7 +28,9 @@ router.get("/:stockCode", async (req, res) => {
 
 
     if (queryResultsStocks.length === 0) {
-        throw new Error("查無代碼");
+        // throw new Error("查無代碼");
+        // 查不到代碼 not found
+        next(); // 進入 404
     }
 
     queryResultsStocks = queryResultsStocks[0]; //??
