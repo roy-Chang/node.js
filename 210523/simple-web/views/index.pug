@@ -1,4 +1,12 @@
 extends _layouts/master
 
+block scripts 
+    script(src="/javascripts/api.js")
+
 block content 
     h1 這是首頁
+
+
+    //- #app 
+    //-     ul 
+    //-         li(v-for="stock in stock") {{stock.stock_id}} {{stock.stock_name}}
