@@ -103,7 +103,7 @@ const loginRules = [
     body("email").isEmail(),
     body("password").isLength({ min: 6 }),
 ];
-router.post("/login", loginRules, async (req, res) => {
+router.post("/login", loginRules, async (req, res, next) => {
 
     const validateResult = validationResult(req);
     if (!validateResult.isEmpty()) {
@@ -114,6 +114,7 @@ router.post("/login", loginRules, async (req, res) => {
     let loginResult = await connection.queryAsync("SELECT * FROM members WHERE email=?", req.body.email)
 
     if (loginResult.length === 0) {
+        res.send("登入失敗，查無此帳號")
         return next(new Error("查無此帳號"))
     }
 
@@ -127,7 +128,7 @@ router.post("/login", loginRules, async (req, res) => {
     if (result) {
         res.send("登入成功")
     } else {
-        res.send("登入失敗")
+        res.send("登入失敗，密碼錯誤")
     }
 })
 
