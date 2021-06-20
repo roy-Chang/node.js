@@ -126,11 +126,23 @@ router.post("/login", loginRules, async (req, res, next) => {
     let result = await bcrypt.compare(req.body.password, member.password)
     console.log(member);
     if (result) {
-        res.send("登入成功")
+        req.session.member = {
+            email: member.email,
+            name: member.name,
+            photo: member.photo,
+        };
+        // status code 303
+        res.redirect(303, "/")
     } else {
+        req.session.member = null;
         res.send("登入失敗，密碼錯誤")
     }
 })
 
+
+router.get("/logout", (req, res) => {
+    req.session.member = null
+    res.redirect(303, "/")
+})
 
 module.exports = router;

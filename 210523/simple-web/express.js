@@ -1,5 +1,6 @@
 // 資料庫連線
 const connection = require("./utils/db");
+// require('dotenv').config()
 
 const express = require("express");
 let app = express();
@@ -10,10 +11,24 @@ let app = express();
 // req->middlewares....->router
 
 
+
+// 前端送 json data ， express 才能解析
+app.use(express.json());
+
+// 取得cookie資料
+const cookieParser = require("cookie-parser");
+app.use(cookieParser({
+}));
+// console.log(process.env.SESSION_SECRET);
+// 處理 session 資料
+const expressSession = require("express-session");
+app.use(expressSession({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: false,
+
+}))
 // 加上這個中間件 可以解讀POST後的的資料
 app.use(express.urlencoded({ extended: false }));
-
-
 
 
 // 可以指定一個或多個目錄或是"靜態資源目錄"
@@ -28,6 +43,14 @@ app.use(express.static("public"));
 app.set("views", "views");
 // 告訴 express 我們用的 view engine 是 pug
 app.set("view engine", "pug");
+
+// 把req.session 設定給res.locals
+app.use(function (req, res, next) {
+    // 把 request 的 session 資料設定給 res的 locals
+    // views 就可以取得資料
+    res.locals.member = req.session.member;
+    next();
+})
 
 
 app.use(function (req, res, next) {
@@ -45,12 +68,19 @@ app.use("/api", apiRouter);
 // auth router
 let authRouter = require("./routers/auth");
 app.use("/user", authRouter);
+// member router
+let memberRouter = require("./routers/member");
+app.use("/member", memberRouter);
 
 
 
 // 路由 router
 app.get("/", function (req, res) {
     // res.send("Hello Express")
+
+    res.cookie("lang", "zh-TW");
+
+
     res.render("index");
 })
 app.get("/about", function (req, res) {
