@@ -10,6 +10,12 @@ let app = express();
 // req->middlewares....->router
 
 
+// 加上這個中間件 可以解讀POST後的的資料
+app.use(express.urlencoded({ extended: false }));
+
+
+
+
 // 可以指定一個或多個目錄或是"靜態資源目錄"
 // 自動幫你為 public 裡面的檔案建立路由
 // /javascripts/api.js
