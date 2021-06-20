@@ -12,6 +12,9 @@ let app = express();
 
 // 可以指定一個或多個目錄或是"靜態資源目錄"
 // 自動幫你為 public 裡面的檔案建立路由
+// /javascripts/api.js
+// /styles/main.css
+// /images/00.jpg
 app.use(express.static("public"));
 
 // 第一個 : views 變數
