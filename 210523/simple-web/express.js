@@ -33,11 +33,12 @@ app.use(function (req, res, next) {
 // stock 模組
 let stockRouter = require("./routers/stock");
 app.use("/stock", stockRouter);
-
+// stock api router
 let apiRouter = require("./routers/api");
 app.use("/api", apiRouter);
-
-
+// auth router
+let authRouter = require("./routers/auth");
+app.use("/user", authRouter);
 
 
 
