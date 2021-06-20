@@ -30,10 +30,11 @@ router.get("/:stockCode", async (req, res, next) => {
     if (queryResultsStocks.length === 0) {
         // throw new Error("查無代碼");
         // 查不到代碼 not found
-        next(); // 進入 404
+        return next(); // 進入 下一個中間鍵
+        // 如果不加上 return 當next() 執行完後會繼續執行下面的程式碼
     }
 
-    queryResultsStocks = queryResultsStocks[0]; //??
+    queryResultsStocks = queryResultsStocks[0];
 
     let queryResultsPrices = await connection.queryAsync(
         "SELECT*FROM stock_price WHERE stock_id = ? ORDER BY date LIMIT ? OFFSET ?;"
