@@ -61,14 +61,15 @@ const uploader = multer({
 
 
 
+
+
 router.get("/register", (req, res) => {
     res.render("auth/register");
 })
-router.post("/register", registerRules, uploader.single("photo"), async (req, res, next) => {
+router.post("/register", uploader.single("photo"), registerRules, async (req, res, next) => {
     // console.log(req.body);
     // console.log(req.file);
     const validateResult = validationResult(req);
-    console.log(validationResult(req));
     if (!validateResult.isEmpty()) {
         return next(new Error("註冊表單錯誤"))
     }
@@ -76,23 +77,59 @@ router.post("/register", registerRules, uploader.single("photo"), async (req, re
     // 檢查是否註冊過
     let checkResult = await connection.queryAsync("SELECT * FROM members WHERE email=?", req.body.email)
 
-    console.log(checkResult);
     if (checkResult.length !== 0) {
         return next(new Error("Email已註冊"))
     }
 
-    await bcrypt.hash(req.body.password, 10)
-    // let insertResult = await connection.queryAsync("INSERT INTO members (email, password, name, photo) VALUES (?)", [[req.body.email, req.body.password, req.body.name, `/uploads/${req.file.filename}`]])
-    let insertResult = await connection.queryAsync("INSERT INTO members (email, password, name) VALUES (?)", [[req.body.email, req.body.password, req.body.name]])
+    // 檢查 是否有選擇圖片
+    let filepath = req.file ? "/uploads/" + req.file.filename : null;
 
+
+    let insertResult = await connection.queryAsync("INSERT INTO members (email, password, name, photo) VALUES (?)", [[req.body.email, await bcrypt.hash(req.body.password, 10), req.body.name, filepath]])
+    // let insertResult = await connection.queryAsync("INSERT INTO members (email, password, name) VALUES (?)", [[req.body.email, req.body.password, req.body.name]])
 
     res.send("POST PAGE");
 
 })
 
+
+
 router.get("/login", (req, res) => {
     res.render("auth/login");
 
 })
+
+const loginRules = [
+    body("email").isEmail(),
+    body("password").isLength({ min: 6 }),
+];
+router.post("/login", loginRules, async (req, res) => {
+
+    const validateResult = validationResult(req);
+    if (!validateResult.isEmpty()) {
+        return next(new Error("登入錯誤"))
+    }
+
+    // 檢查一下這個 email 存不存在
+    let loginResult = await connection.queryAsync("SELECT * FROM members WHERE email=?", req.body.email)
+
+    if (loginResult.length === 0) {
+        return next(new Error("查無此帳號"))
+    }
+
+    member = loginResult[0];
+
+    // 比對密碼
+    // 因為 bcrpt 每次加密的結果都不一樣 所以不能單純的比對字串
+    // 必須要用bcrypt 提供的比對函式
+    let result = await bcrypt.compare(req.body.password, member.password)
+    console.log(member);
+    if (result) {
+        res.send("登入成功")
+    } else {
+        res.send("登入失敗")
+    }
+})
+
 
 module.exports = router;

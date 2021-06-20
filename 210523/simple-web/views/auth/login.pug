@@ -2,3 +2,13 @@ extends ../_layouts/master
 
 block content 
     h1 登入畫面
+
+    form.form#registerFrm(method="POST", action="/user/login")
+        div
+            label(for="email") Email
+            input(name="email", type="mail" value="test@test.com")   
+        div
+            label(for="password") 密碼 
+            input(name="password", type="password" value="123456")
+
+        button(type="submit") 送出
