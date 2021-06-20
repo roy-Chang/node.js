@@ -1,7 +1,5 @@
 // 資料庫連線
 const connection = require("./utils/db");
-// require('dotenv').config()
-
 const express = require("express");
 let app = express();
 
@@ -11,21 +9,18 @@ let app = express();
 // req->middlewares....->router
 
 
-
 // 前端送 json data ， express 才能解析
 app.use(express.json());
 
 // 取得cookie資料
-const cookieParser = require("cookie-parser");
-app.use(cookieParser({
-}));
-// console.log(process.env.SESSION_SECRET);
+// const cookieParser = require("cookie-parser");
+// app.use(cookieParser({}));
+
 // 處理 session 資料
 const expressSession = require("express-session");
 app.use(expressSession({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
-
 }))
 // 加上這個中間件 可以解讀POST後的的資料
 app.use(express.urlencoded({ extended: false }));
@@ -58,6 +53,16 @@ app.use(function (req, res, next) {
     console.log("someone visited at ", current);
     next();
 })
+
+// app.use(function (req, res, next) {
+//     // 因為訊息只希望被顯示一次
+//     // 所以傳到 views 一次後 就刪掉
+//     if (req.session.message) {
+//         res.locals.message = req.session.message;
+//         delete req.session.message;
+//     }
+// })
+
 
 // stock 模組
 let stockRouter = require("./routers/stock");
@@ -129,9 +134,7 @@ app.use(function (err, req, res, next) {
 });
 
 
-
 app.listen(3000, async () => {
-
     await connection.connectAsync();
     console.log("run in port 3000");
 })

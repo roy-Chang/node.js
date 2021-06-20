@@ -135,6 +135,7 @@ router.post("/login", loginRules, async (req, res, next) => {
         res.redirect(303, "/")
     } else {
         req.session.member = null;
+        // req.session.message
         res.send("登入失敗，密碼錯誤")
     }
 })
